@@ -1,0 +1,135 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.centered {
+    background-color: rgb(23, 23, 23);
+    width: 60%;
+    height: 60%;
+    border-radius: 20px;
+
+
+    overflow-y: auto;
+    position: relative;
+}
+
+.question-panel {
+
+}
+
+.question-panel-input {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    /* margin: 20px; */
+    padding-bottom: 20px;
+    background-color: rgb(23, 23, 23);
+
+
+
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    /* border-bottom: 1px solid white; */
+}
+
+.question-panel-input input {
+    padding: 10px;
+    margin-top: 50px;
+    width: 50%;
+    border-radius: 10px;
+    padding: 18px 10px;
+   
+}
+
+.question-elements {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    background: rgb(135, 131, 131);
+    width: 80%;
+    margin-top: 25px;
+    border-radius: 10px;
+    padding: 17px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 18px;
+}
+
+.question-elements:hover {
+    color: white;
+    box-shadow: 0 0 3px;
+}
+
+.question-panel-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.add-new-question {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    border-radius: 10px;
+
+
+
+    position: sticky;  /* Sabitlemek için sticky */
+    bottom: 0;  /* Sayfanın altına yapışmasını sağla */
+    background-color: rgb(23, 23, 23);  /* Arka plan rengi */
+    z-index: 10;  /* Üstte kalması için z-index */
+    padding-bottom: 20px;
+}
+
+.add-question {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(75, 75, 75);
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+}
+
+.add-question:hover {
+    color: white;
+    box-shadow: 0 0 5px;
+    padding: 20px 30px;
+}
+
+.question-element-edit, .question-element-delete {
+    border: 2px solid white;
+    padding: 10px 16px;
+    border-radius: 5px;
+}
+
+.question-element-edit:hover, .question-element-delete:hover {
+    background-color: white;
+    color: black;
+}
+
+.question-element-title {
+    padding: 0px 60px;
+    padding-top: 10px;
+    padding-left: -10px;
+    background-color: rgb(115, 112, 112);
+    border-radius: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
