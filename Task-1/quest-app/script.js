@@ -42,7 +42,7 @@ const d = document.getElementById('-d');
 console.log("clickx",);
 
 
-if (!document.URL.includes("List")) {
+if (document.URL.includes("questionPage")) {
 
     sendQuestion();
 }
@@ -103,7 +103,7 @@ function addNewQuestion() {
 
 
 
-if (!document.URL.includes("Page")) {
+if (document.URL.includes("questionList")) {
 
     addNewQuestion();
 }
@@ -118,17 +118,22 @@ console.log(questionClick);
 
 
 
+
+
+const deleteButton = document.querySelector('.question-element-delete');
+
 questionClick.forEach((element) => {
 
 
     const editButton = element.querySelector('.question-element-edit');
 
-    const deleteButton = element.querySelector('.question-element-delete');
+    
 
     // Eğer tıklanan yer edit veya delete butonları değilse
     element.addEventListener('click', function (event) {
         if (event.target !== editButton && event.target !== deleteButton) {
             console.log(element); // Tıklanan öğeyi konsola yazdır
+            //alert("go")
             window.location.href = "questionPage.html";
         }
     });
@@ -139,15 +144,104 @@ questionClick.forEach((element) => {
 
 
 
-document.getElementById('searchinput').addEventListener('input', function () {
-    const searchTerm = this.value.toLowerCase();
-    const resultPanel = document.getElementById('resultPanel');
+// function displayQuestions(){
 
-    // Sonuçları temizle
-    resultPanel.innerHTML = '';
+// }
 
-    // Sorular dizisini filtrele
-    const filteredSorular = sorular.filter(soruObj =>
-        soruObj.soru.toLowerCase().includes(searchTerm)
-    );
+// document.getElementById('searchinput').addEventListener('input', function() {
+//     const searchTerm = this.value.toLowerCase();
+
+//     const filteredQuestions = sorular.filter(soruObj =>
+//         soruObj.soru.toLowerCase().includes(searchTerm)
+//     );
+
+//     console.log(searchTerm);
+    
+//     displayQuestions(filteredQuestions.soru);
+// });
+
+// displayQuestions(sorular.soru);
+
+
+
+
+
+
+
+
+const soruMetni = document.getElementById('question');
+const optionsA = document.getElementById('optionsA');
+const optionsB = document.getElementById('optionsB');
+const optionsC = document.getElementById('optionsC');
+const optionsD = document.getElementById('optionsD');
+const correctOption = document.getElementById('correct-option');
+
+
+
+
+
+
+soruMetni?.addEventListener('input', function(event){
+    
+    const girilenSoru = event.target.value;
+
+    console.log(girilenSoru);
+    
 })
+
+
+function addQuestion(){
+
+
+    
+    // sorular.push({
+    //     id: questPanel.children.length,
+    //     soru: ``,
+    //     secenekler: {
+    //         a: "npm",
+    //         b: "nodejs",
+    //         c: "npx",
+    //         d: "react"
+    //     },
+    //     dogruCevap: "a"
+    // })
+
+    console.log();
+    
+}
+
+
+
+const deleteButon = document.getElementById('deleteQ');
+
+deleteButon.addEventListener('click', (event)=>{
+    event.stopPropagation();
+    sorular.splice(1,1)
+    rePaint(sorular);
+})
+
+const rePaint = (questions) => {
+    questPanel.innerHTML = '';
+    questions.forEach(question => {
+      const questionElementHTML = `
+            <div class="question-elements">
+              <div class="question-element-title">${question.soru}</div>
+              <div class="question-element-edit">Edit</div>
+              <div class="question-element-delete">Delete</div>
+            </div>
+        `;
+      questPanel.insertAdjacentHTML("beforeend", questionElementHTML);
+    });
+  }
+
+
+
+// function deleteQuestion(input){
+
+//     sorular.splice(input-1,1);
+//     console.log("soru silindi");
+    
+// }
+
+
+

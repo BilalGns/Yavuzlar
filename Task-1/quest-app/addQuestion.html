@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style4.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="centered">
+          
+            <div class="form-section">
+                <h2 style="color: aliceblue;">Soru Ekleme</h2>
+                <input type="text" id="question" placeholder="Soru Metni" required>
+                <div class="secenekler">
+                    <input type="text" id="optionsA" placeholder="A şıkkı" required>
+                    <input type="text" id="optionsB" placeholder="B şıkkı" required>
+                    <input type="text" id="optionsC" placeholder="C şıkkı" required>
+                    <input type="text" id="optionsC" placeholder="D şıkkı" required>
+                </div>
+            
+                <select class="correct" required id="correct-option">
+                    <option value="" selected disabled>Doğru şıkkı girin</option>
+                    <option value="a">A</option>
+                    <option value="b">B</option>
+                    <option value="c">C</option>
+                    <option value="d">D</option>
+                </select>
+                <!-- <input type="text" id="correct-option" placeholder="Doğru Şık"> -->
+                <input type="number" id="difficulty" placeholder="Zorluk Derecesi" min="1" max="5" required>
+                <button onclick="addQuestion()" type="submit" id="yeni-soru">Soru Ekle</button>
+            </div>
+
+        </div>
+      </div>
+
+      <script src="script.js"></script>
+</body>
+</html>
