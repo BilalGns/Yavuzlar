@@ -1,7 +1,7 @@
-let sorular = [
+let sorular = JSON.parse(localStorage.getItem("sorular")) || [
     {
         id: 0,
-        soru: "Hangisi javascript paket yöneticisidir ?",
+        soru: "Hangisi javascript paket yöneticisidir?",
         secenekler: {
             a: "npm",
             b: "nodejs",
@@ -10,40 +10,16 @@ let sorular = [
         },
         dogruCevap: "a"
     }
-
-]
-
-
-localStorage.setItem("sorular", JSON.stringify(sorular))
-
-
-
+];
 
 const questPanel = document.getElementById('question-panel-list');
-
-const btn = document.getElementsByClassName('add-question')[0];
-
 const question = document.getElementById('question-title');
-
-console.log("question:", question);
-
-
 const a = document.getElementById('-a');
 const b = document.getElementById('-b');
 const c = document.getElementById('-c');
 const d = document.getElementById('-d');
 
-
-// const questionClick = document.querySelectorAll('.question-element-title');
-
-
-
-
-console.log("clickx",);
-
-
 if (document.URL.includes("questionPage")) {
-
     sendQuestion();
 }
 
@@ -55,148 +31,11 @@ function sendQuestion() {
     d.firstElementChild.innerText = `${sorular[0].secenekler.d}`;
 }
 
-
-console.log("click4",);
-
-
 function addNewQuestion() {
 
-
-    sorular.push({
-        id: questPanel.children.length,
-        soru: "Gönderilen soru ",
-        secenekler: {
-            a: "npm",
-            b: "nodejs",
-            c: "npx",
-            d: "react"
-        },
-        dogruCevap: "a"
-    })
-
-
-
-    const li = `
-        <div class="question-elements">
-        <div class="question-element-title" value="${questPanel.children.length + 1}">
-                    ${sorular[sorular.length - 1].soru} ${questPanel.children.length + 1}
-                    </div>
-                <div class="question-element-edit">
-                Edit
-                </div>
-                <div class="question-element-delete">
-                Delete
-                </div>
-                </div>
-        `;
-
-    questPanel.insertAdjacentHTML("beforeend", li);
-
-
-
-
-    localStorage.setItem("sorular", JSON.stringify(sorular))
-
-
-}
-
-
-
-
-if (document.URL.includes("questionList")) {
-
-    addNewQuestion();
-}
-
-
-
-console.log("click",);
-
-const questionClick = document.querySelectorAll('.question-elements');
-
-console.log(questionClick);
-
-
-
-
-
-const deleteButton = document.querySelector('.question-element-delete');
-
-questionClick.forEach((element) => {
-
-
-    const editButton = element.querySelector('.question-element-edit');
-
-    
-
-    // Eğer tıklanan yer edit veya delete butonları değilse
-    element.addEventListener('click', function (event) {
-        if (event.target !== editButton && event.target !== deleteButton) {
-            console.log(element); // Tıklanan öğeyi konsola yazdır
-            //alert("go")
-            window.location.href = "questionPage.html";
-        }
-    });
-});
-
-
-
-
-
-
-// function displayQuestions(){
-
-// }
-
-// document.getElementById('searchinput').addEventListener('input', function() {
-//     const searchTerm = this.value.toLowerCase();
-
-//     const filteredQuestions = sorular.filter(soruObj =>
-//         soruObj.soru.toLowerCase().includes(searchTerm)
-//     );
-
-//     console.log(searchTerm);
-    
-//     displayQuestions(filteredQuestions.soru);
-// });
-
-// displayQuestions(sorular.soru);
-
-
-
-
-
-
-
-
-const soruMetni = document.getElementById('question');
-const optionsA = document.getElementById('optionsA');
-const optionsB = document.getElementById('optionsB');
-const optionsC = document.getElementById('optionsC');
-const optionsD = document.getElementById('optionsD');
-const correctOption = document.getElementById('correct-option');
-
-
-
-
-
-
-soruMetni?.addEventListener('input', function(event){
-    
-    const girilenSoru = event.target.value;
-
-    console.log(girilenSoru);
-    
-})
-
-
-function addQuestion(){
-
-
-    
-    // sorular.push({
+    // const newQuestion = {
     //     id: questPanel.children.length,
-    //     soru: ``,
+    //     soru: `Gönderilen soru ${questPanel.children.length}`,
     //     secenekler: {
     //         a: "npm",
     //         b: "nodejs",
@@ -204,44 +43,102 @@ function addQuestion(){
     //         d: "react"
     //     },
     //     dogruCevap: "a"
-    // })
+    // };
 
-    console.log();
-    
+    // sorular.push(newQuestion);
+    localStorage.setItem("sorular", JSON.stringify(sorular));
+
+    const li = `
+        <div class="question-elements">
+            <div class="question-element-title" value="${questPanel.children.length}">
+                ${newQuestion.soru}
+            </div>
+            <div class="question-element-edit">Edit</div>
+            <div class="question-element-delete">Delete</div>
+        </div>
+    `;
+    questPanel.insertAdjacentHTML("beforeend", li);
+    attachEventListeners();
+}
+
+function attachEventListeners() {
+    const deleteButtons = document.querySelectorAll('.question-element-delete');
+    deleteButtons.forEach((deleteButton) => {
+        deleteButton.addEventListener('click', function (event) {
+            event.stopPropagation();
+
+            const questionIndex = event.target.getAttribute('data-index');
+
+            sorular.splice(questionIndex, 1);
+
+            localStorage.setItem("sorular", JSON.stringify(sorular));
+
+            rePaint(sorular);
+        });
+    });
+}
+
+function rePaint(questions) {
+    questPanel.innerHTML = '';
+    questions.forEach((question, index) => {
+        const questionElementHTML = `
+            <div class="question-elements">
+                <div class="question-element-title">${question.soru}</div>
+                <div class="question-element-edit">Edit</div>
+                <div class="question-element-delete" data-index="${index}">Delete</div>
+            </div>
+        `;
+        questPanel.insertAdjacentHTML("beforeend", questionElementHTML);
+    });
+
+    attachEventListeners();
+}
+
+
+if (document.URL.includes('questionList.html')) {
+    rePaint(sorular);
 }
 
 
 
-const deleteButon = document.getElementById('deleteQ');
+// SOru ekleme kısmı
 
-deleteButon.addEventListener('click', (event)=>{
-    event.stopPropagation();
-    sorular.splice(1,1)
-    rePaint(sorular);
-})
+function addQuestion() {
 
-const rePaint = (questions) => {
-    questPanel.innerHTML = '';
-    questions.forEach(question => {
-      const questionElementHTML = `
-            <div class="question-elements">
-              <div class="question-element-title">${question.soru}</div>
-              <div class="question-element-edit">Edit</div>
-              <div class="question-element-delete">Delete</div>
-            </div>
-        `;
-      questPanel.insertAdjacentHTML("beforeend", questionElementHTML);
-    });
-  }
+    const question = document.getElementById('question').value;
+    const optionsA = document.getElementById('optionsA').value;
+    const optionsB = document.getElementById('optionsB').value;
+    const optionsC = document.getElementById('optionsC').value;
+    const optionsD = document.getElementById('optionsD').value;
+    const correctOption = document.getElementById('correct-option').value;
+    const difficulty = document.getElementById('difficulty').value;
 
 
+    const newQuestion = {
+        id: Date.now(),  // Farklı bir ID ataması için kullanıyoruz. Şuan için buranın bir işlevi yok
+        soru: question,
+        secenekler: {
+            a: optionsA,
+            b: optionsB,
+            c: optionsC,
+            d: optionsD
+        },
+        dogruCevap: correctOption,
+        zorluk: difficulty
+    };
 
-// function deleteQuestion(input){
+    let sorular = JSON.parse(localStorage.getItem('sorular')) || [];
+    sorular.push(newQuestion);
+    localStorage.setItem('sorular', JSON.stringify(sorular));
 
-//     sorular.splice(input-1,1);
-//     console.log("soru silindi");
-    
-// }
+    window.location.href = 'index.html';
+}
 
+if (document.URL.includes('questionList.html')) {
 
+    document.querySelector('.question-element-title').addEventListener('click', () => {
 
+        window.location.href = 'questionPage.html';
+    })
+
+}
